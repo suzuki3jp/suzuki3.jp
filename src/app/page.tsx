@@ -1,169 +1,103 @@
-import { ProjectCard } from "@/components/project-card";
-import { Button } from "@/components/ui/button";
-import { Github, Globe, Mail, Twitter } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
-
-interface ILink {
-    component: React.ReactNode;
-    href: string;
-}
-
-const links: ILink[] = [
-    {
-        component: <Github className="w-5 h-5" />,
-        href: "https://github.com/suzuki3jp",
-    },
-    {
-        component: <Twitter className="w-5 h-5" />,
-        href: "https://twitter.com/suzuki3_jp",
-    },
-    {
-        component: <Globe className="w-5 h-5" />,
-        href: "https://suzuki3.jp",
-    },
-];
-
-interface IPorject {
-    title: string;
-    description: string;
-    github: string;
-    imageUrl?: string;
-    demo?: string;
-}
-
-const projects: IPorject[] = [
-    {
-        title: "PlaylistWizard",
-        description:
-            "YouTube, Spotify のプレイリストを管理、整理するためのウェブアプリケーション。",
-        github: "https://github.com/suzuki3jp/playlistwizard",
-        demo: "https://playlistwizard.suzuki3.jp",
-    },
-    {
-        title: "MySteam",
-        description:
-            "Steam の最近プレイしたゲームや所有しているゲームを一枚の画像に出力するウェブアプリケーション。動的なsvgを返却するエンドポイントも提供。",
-        github: "https://github.com/suzuki3jp/my-steam",
-        demo: "https://my-steam.suzuki3.jp",
-    },
-    {
-        title: "ArikenCompany",
-        description: "Twitch Chat Bot 兼切り抜き業務効率化アプリケーション。",
-        github: "https://github.com/suzuki3jp/arikencompany",
-        demo: "https://arikencompany.suzuki3.jp",
-    },
-    {
-        title: "suzuki3.jp",
-        description: "このサイト。",
-        github: "https://github.com/suzuki3jp/suzuki3.jp",
-        demo: "https://suzuki3.jp",
-    },
-];
 
 export default function Home() {
-    return (
-        <div className="min-h-screen bg-background">
-            {/* ヘッダーセクション - 画面いっぱいに表示 */}
-            <section className="relative flex flex-col items-center justify-center min-h-screen px-4 text-center">
-                <div className="flex flex-col items-center space-y-6 max-w-3xl">
-                    {/* アイコン */}
-                    <div className="relative w-32 h-32 overflow-hidden rounded-full border-4 border-primary/20">
-                        <Image
-                            src="/suzuki3jp-icon.png"
-                            alt="プロフィール画像"
-                            width={128}
-                            height={128}
-                            className="object-cover"
-                            priority
-                        />
-                    </div>
+  return (
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+        <Image
+          className="dark:invert"
+          src="/next.svg"
+          alt="Next.js logo"
+          width={180}
+          height={38}
+          priority
+        />
+        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
+          <li className="mb-2 tracking-[-.01em]">
+            Get started by editing{" "}
+            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
+              src/app/page.tsx
+            </code>
+            .
+          </li>
+          <li className="tracking-[-.01em]">
+            Save and see your changes instantly.
+          </li>
+        </ol>
 
-                    {/* 名前 */}
-                    <h1 className="text-4xl font-bold tracking-tight">
-                        鈴木（suzuki3jp）
-                    </h1>
-                    <p className="text-xl text-muted-foreground">
-                        オタクしたり切り抜きしたりゲームしたりプログラム書いたり
-                    </p>
-
-                    {/* ソーシャルリンク */}
-                    <div className="flex items-center justify-center gap-4 mt-6">
-                        {links.map((link, index) => (
-                            <Button
-                                key={link.href}
-                                variant="ghost"
-                                size="icon"
-                                asChild
-                            >
-                                <Link
-                                    href={link.href}
-                                    target="_blank"
-                                    aria-label="ソーシャルリンク"
-                                >
-                                    {link.component}
-                                </Link>
-                            </Button>
-                        ))}
-                    </div>
-
-                    {/* スクロールダウン指示 */}
-                    <div className="absolute bottom-8 animate-bounce">
-                        <p className="text-sm text-muted-foreground">
-                            スクロールしてプロジェクトを見る
-                        </p>
-                        <div className="flex justify-center mt-2">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="text-muted-foreground"
-                            >
-                                <title>hoge</title>
-                                <path d="M12 5v14M5 12l7 7 7-7" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* プロジェクトセクション */}
-            <section className="py-20 px-4 md:px-6 lg:px-8 bg-muted/50">
-                <div className="container mx-auto max-w-5xl">
-                    <h2 className="text-3xl font-bold tracking-tight mb-12 text-center">
-                        プロジェクト
-                    </h2>
-
-                    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                        {projects.map((project, index) => (
-                            <ProjectCard
-                                key={project.title}
-                                title={project.title}
-                                description={project.description}
-                                imageUrl={project.imageUrl}
-                                githubUrl={project.github}
-                                demoUrl={project.demo}
-                            />
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* フッター */}
-            <footer className="py-6 px-4 border-t">
-                <div className="container mx-auto max-w-5xl flex flex-col md:flex-row justify-between items-center">
-                    <p className="text-sm text-muted-foreground">
-                        © {new Date().getFullYear()} suzuki3jp. All rights
-                        reserved.
-                    </p>
-                </div>
-            </footer>
+        <div className="flex gap-4 items-center flex-col sm:flex-row">
+          <a
+            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
+            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              className="dark:invert"
+              src="/vercel.svg"
+              alt="Vercel logomark"
+              width={20}
+              height={20}
+            />
+            Deploy now
+          </a>
+          <a
+            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
+            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Read our docs
+          </a>
         </div>
-    );
+      </main>
+      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
+        <a
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image
+            aria-hidden
+            src="/file.svg"
+            alt="File icon"
+            width={16}
+            height={16}
+          />
+          Learn
+        </a>
+        <a
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image
+            aria-hidden
+            src="/window.svg"
+            alt="Window icon"
+            width={16}
+            height={16}
+          />
+          Examples
+        </a>
+        <a
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image
+            aria-hidden
+            src="/globe.svg"
+            alt="Globe icon"
+            width={16}
+            height={16}
+          />
+          Go to nextjs.org →
+        </a>
+      </footer>
+    </div>
+  );
 }
