@@ -1,6 +1,11 @@
 "use server";
 
-import { getAllProjects, getMDXContent, type ProjectWithContent } from "./mdx";
+import {
+	getAllProjects,
+	getFeaturedProjects,
+	getMDXContent,
+	type ProjectWithContent,
+} from "./mdx";
 
 export async function getProjectContent(
 	slug: string,
@@ -10,4 +15,10 @@ export async function getProjectContent(
 
 export async function getAllProjectsAction(): Promise<ProjectWithContent[]> {
 	return getAllProjects();
+}
+
+export async function getFeaturedProjectsAction(): Promise<
+	ProjectWithContent[]
+> {
+	return getFeaturedProjects();
 }

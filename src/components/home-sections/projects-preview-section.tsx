@@ -7,16 +7,16 @@ import { useEffect, useState } from "react";
 
 import { ProjectCard } from "@/components/project-card";
 import { Button } from "@/components/ui/button";
-import { getAllProjectsAction } from "@/lib/actions";
-import type { ProjectWithContent } from "@/lib/mdx";
+import { getFeaturedProjectsAction } from "@/lib/actions";
+import { type ProjectWithContent } from "@/lib/mdx";
 
 export function ProjectsPreviewSection() {
 	const [projects, setProjects] = useState<ProjectWithContent[]>([]);
 
 	useEffect(() => {
 		const fetchProjects = async () => {
-			const allProjects = await getAllProjectsAction();
-			setProjects(allProjects.slice(0, 3));
+			const projects = await getFeaturedProjectsAction();
+			setProjects(projects);
 		};
 		fetchProjects();
 	}, []);

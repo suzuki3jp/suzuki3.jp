@@ -2,17 +2,18 @@ import fs from "fs";
 import matter from "gray-matter";
 import path from "path";
 
-const contentDirectory = path.join(process.cwd(), "content");
+const projectsDirectory = path.join(process.cwd(), "src", "projects");
 
 export interface ProjectMetadata {
 	title: string;
 	description: string;
 	tech: string[];
-	image: string;
+	images: string[];
 	status: string;
-	year: string;
-	duration: string;
+	startDate: string;
+	endDate?: string;
 	team: string;
+	featured?: boolean; // 新しく追加
 	githubUrl?: string;
 	liveUrl?: string;
 }
@@ -25,7 +26,7 @@ export interface ProjectWithContent {
 
 export async function getMDXContent(slug: string): Promise<ProjectWithContent> {
 	try {
-		const filePath = path.join(contentDirectory, "projects", `${slug}.mdx`);
+		const filePath = path.join(projectsDirectory, `${slug}.mdx`);
 		const fileContent = fs.readFileSync(filePath, "utf8");
 		const { data, content } = matter(fileContent);
 
@@ -41,10 +42,9 @@ export async function getMDXContent(slug: string): Promise<ProjectWithContent> {
 				title: slug,
 				description: "Content not found",
 				tech: [],
-				image: "/placeholder.svg?height=400&width=800",
+				images: ["/placeholder.svg?height=400&width=800"],
 				status: "不明",
-				year: "不明",
-				duration: "不明",
+				startDate: "2024-01-01",
 				team: "不明",
 			},
 			content: `# ${slug}\n\nContent not found.`,
@@ -55,8 +55,6 @@ export async function getMDXContent(slug: string): Promise<ProjectWithContent> {
 
 export function getAllProjects(): ProjectWithContent[] {
 	try {
-		const projectsDirectory = path.join(contentDirectory, "projects");
-
 		if (!fs.existsSync(projectsDirectory)) {
 			return [];
 		}
@@ -77,12 +75,29 @@ export function getAllProjects(): ProjectWithContent[] {
 				};
 			});
 
+		// 開始日でソート（新しいものから）
 		return projects.sort(
 			(a, b) =>
-				Number.parseInt(b.metadata.year) - Number.parseInt(a.metadata.year),
+				new Date(b.metadata.startDate).getTime() -
+				new Date(a.metadata.startDate).getTime(),
 		);
 	} catch (error) {
 		console.error("Error reading project directory:", error);
 		return [];
 	}
+}
+
+// Featured プロジェクトを取得する関数
+export function getFeaturedProjects(): ProjectWithContent[] {
+	const allProjects = getAllProjects();
+	const featuredProjects = allProjects.filter(
+		(project) => project.metadata.featured === true,
+	);
+
+	// featuredプロジェクトを開始日順でソート
+	return featuredProjects.sort(
+		(a, b) =>
+			new Date(b.metadata.startDate).getTime() -
+			new Date(a.metadata.startDate).getTime(),
+	);
 }
