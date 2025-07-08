@@ -1,10 +1,10 @@
 "use client";
 
-import { BackgroundEffects } from "@/components/ui/background-effects";
-import { Section, SectionHeader, Container } from "@/components/layout/section";
-import { COMMON_STYLES } from "@/constants/app-config";
 import { motion } from "framer-motion";
-import { scaleIn, getTransition } from "@/lib/animations";
+import { Section, SectionHeader, Container } from "@/components/layout/section";
+import { BackgroundEffects } from "@/components/ui/background-effects";
+import { COMMON_STYLES } from "@/constants/app-config";
+import { getTransition, scaleIn } from "@/lib/animations";
 
 export function AboutSection() {
 	return (
@@ -22,7 +22,9 @@ export function AboutSection() {
 				>
 					<BackgroundEffects />
 
-					<p className={`text-lg ${COMMON_STYLES.text.subheading} leading-relaxed`}>
+					<p
+						className={`text-lg ${COMMON_STYLES.text.subheading} leading-relaxed`}
+					>
 						日頃感じているちょっとした不便を解決するために、個人開発を行っています。
 						主に TypeScript を使用してきましたが、今後 Go や Rust
 						などの言語にも挑戦していきたいと考えています。

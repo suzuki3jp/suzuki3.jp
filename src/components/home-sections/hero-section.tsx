@@ -2,13 +2,19 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown, Github, Mail, Sparkles, Twitter } from "lucide-react";
-
+import { BackgroundEffects } from "@/components/ui/background-effects";
 import { Button } from "@/components/ui/button";
+import { APP_CONFIG, COMMON_STYLES } from "@/constants/app-config";
 import { useTypingAnimation } from "@/hooks/use-typing-animation";
+import { fadeInUp, getTransition, infiniteRepeat } from "@/lib/animations";
 
 export function HeroSection() {
-	const names = ["suzuki3jp", "森 滉樹", "Kouki Mori"];
-	const displayText = useTypingAnimation(names, 2000, 150, 75);
+	const displayText = useTypingAnimation(
+		[...APP_CONFIG.typing.names], // readonly配列をmutableに変換
+		APP_CONFIG.typing.pauseDuration,
+		APP_CONFIG.typing.typeSpeed,
+		APP_CONFIG.typing.deleteSpeed,
+	);
 
 	const { scrollYProgress } = useScroll();
 	const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
@@ -19,61 +25,60 @@ export function HeroSection() {
 			className="relative h-screen flex items-center justify-center overflow-hidden"
 			style={{ y, opacity }}
 		>
-			{/* Background Effects */}
-			<div className="absolute inset-0">
-				<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-				<div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
-			</div>
+			<BackgroundEffects variant="hero" />
 
 			<div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
 				<motion.div
-					initial={{ opacity: 0, y: 50 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 1 }}
+					variants={fadeInUp}
+					initial="initial"
+					animate="animate"
+					transition={getTransition("slow")}
 					className="mb-8"
 				>
 					<div className="flex items-center justify-center mb-4">
-						<Sparkles className="w-8 h-8 text-blue-400 mr-3" />
-						<span className="text-blue-400 font-medium">
+						<Sparkles className={`w-8 h-8 ${COMMON_STYLES.text.accent} mr-3`} />
+						<span className={`${COMMON_STYLES.text.accent} font-medium`}>
 							Welcome to my portfolio
 						</span>
 					</div>
 
 					<h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6">
-						<span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">
+						<span className={COMMON_STYLES.gradients.text}>
 							{displayText}
 							<motion.span
 								animate={{ opacity: [1, 0] }}
 								transition={{
 									duration: 0.8,
-									repeat: Number.POSITIVE_INFINITY,
-									repeatType: "reverse",
+									...infiniteRepeat,
 								}}
-								className="text-blue-400"
+								className={COMMON_STYLES.text.accent}
 							>
 								|
 							</motion.span>
 						</span>
 					</h1>
 
-					<p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+					<p
+						className={`text-xl md:text-2xl ${COMMON_STYLES.text.subheading} max-w-2xl mx-auto leading-relaxed`}
+					>
 						Student Developer & Otaku
 						<br />
-						<span className="text-lg text-gray-400">
+						<span className={`text-lg ${COMMON_STYLES.text.muted}`}>
 							日頃のちょっとした不便をテクノロジーで解決
 						</span>
 					</p>
 				</motion.div>
 
 				<motion.div
-					initial={{ opacity: 0, y: 30 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 1, delay: 0.5 }}
+					variants={fadeInUp}
+					initial="initial"
+					animate="animate"
+					transition={getTransition("slow", 0.5)}
 					className="flex flex-wrap justify-center gap-4 mb-12"
 				>
 					<Button
 						size="lg"
-						className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white border-0"
+						className={`${COMMON_STYLES.gradients.button} text-white border-0`}
 					>
 						<Github className="w-5 h-5 mr-2" />
 						GitHub
@@ -100,7 +105,7 @@ export function HeroSection() {
 			<motion.div
 				className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
 				animate={{ y: [0, 10, 0] }}
-				transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+				transition={{ duration: 2, ...infiniteRepeat }}
 			>
 				<ChevronDown className="w-8 h-8 text-white/60" />
 			</motion.div>

@@ -2,20 +2,19 @@
 
 import { motion } from "framer-motion";
 import { Code2 } from "lucide-react";
-
+import { Container, Section, SectionHeader } from "@/components/layout/section";
 import { SkillBadge } from "@/components/skill-badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Section, SectionHeader, Container } from "@/components/layout/section";
-import { SKILL_CATEGORIES } from "@/data/skills";
 import { COMMON_STYLES } from "@/constants/app-config";
-import { fadeInUp, fadeInLeft, getStaggerTransition } from "@/lib/animations";
+import { SKILL_CATEGORIES } from "@/data/skills";
+import { fadeInLeft, fadeInUp, getStaggerTransition } from "@/lib/animations";
 
 export function TechStackSection() {
 	return (
 		<Section>
 			<Container>
-				<SectionHeader 
-					title="Tech Stack" 
+				<SectionHeader
+					title="Tech Stack"
 					subtitle="習熟度と共に技術スタックをご紹介"
 					icon={<Code2 className={`w-8 h-8 ${COMMON_STYLES.text.accent}`} />}
 				/>
@@ -31,9 +30,13 @@ export function TechStackSection() {
 							viewport={{ once: true }}
 							className={COMMON_STYLES.card.interactive}
 						>
-							<Card className={`${COMMON_STYLES.gradients.card} ${COMMON_STYLES.card.base} h-full`}>
+							<Card
+								className={`${COMMON_STYLES.gradients.card} ${COMMON_STYLES.card.base} h-full`}
+							>
 								<CardContent className="p-6">
-									<h3 className={`text-xl ${COMMON_STYLES.text.heading} mb-6 text-center group-hover:${COMMON_STYLES.text.accent} transition-colors`}>
+									<h3
+										className={`text-xl ${COMMON_STYLES.text.heading} mb-6 text-center group-hover:${COMMON_STYLES.text.accent} transition-colors`}
+									>
 										{category.category}
 									</h3>
 									<div className="space-y-4">
