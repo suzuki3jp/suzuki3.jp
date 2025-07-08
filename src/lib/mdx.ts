@@ -2,7 +2,7 @@ import fs from "fs";
 import matter from "gray-matter";
 import path from "path";
 
-const projectsDirectory = path.join(process.cwd(), "src", "projects");
+const projectsDirectory = path.resolve(__dirname, "../projects");
 
 export interface ProjectMetadata {
 	title: string;
