@@ -62,10 +62,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
 					</div>
 
 					<Link href={`/projects/${project.slug}`} className="mt-auto">
-						<Button
-							variant="ghost"
-							className="text-white hover:bg-white/10 w-full group-hover:bg-blue-500/20 transition-colors"
-						>
+						<Button className="text-white hover:bg-white/10 w-full group-hover:bg-blue-500/20 transition-colors">
 							詳細を見る
 							<ExternalLink className="w-4 h-4 ml-2" />
 						</Button>
