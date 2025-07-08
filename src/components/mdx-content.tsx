@@ -1,108 +1,154 @@
 "use client";
 
+import { evaluate } from "@mdx-js/mdx";
+import { MDXProvider } from "@mdx-js/react";
 import { motion } from "framer-motion";
 import type React from "react";
+import {  useEffect, useState } from "react";
+import * as runtime from "react/jsx-runtime";
+import remarkGfm from "remark-gfm";
 
 interface MDXContentProps {
 	content: string;
 }
 
+// MDXコンポーネントのカスタムスタイリング
+const mdxComponents = {
+	h1: ({ children }: { children: React.ReactNode }) => (
+		<h1 className="text-3xl font-bold text-white mb-6 mt-8 first:mt-0">
+			{children}
+		</h1>
+	),
+	h2: ({ children }: { children: React.ReactNode }) => (
+		<h2 className="text-2xl font-bold text-white mb-4 mt-6">{children}</h2>
+	),
+	h3: ({ children }: { children: React.ReactNode }) => (
+		<h3 className="text-xl font-bold text-white mb-3 mt-4">{children}</h3>
+	),
+	p: ({ children }: { children: React.ReactNode }) => (
+		<p className="text-gray-300 mb-4 leading-relaxed">{children}</p>
+	),
+	ul: ({ children }: { children: React.ReactNode }) => (
+		<ul className="text-gray-300 mb-4 ml-4 list-disc space-y-2">{children}</ul>
+	),
+	li: ({ children }: { children: React.ReactNode }) => (
+		<li className="text-gray-300">{children}</li>
+	),
+	strong: ({ children }: { children: React.ReactNode }) => (
+		<strong className="font-bold text-white">{children}</strong>
+	),
+	code: ({ children }: { children: React.ReactNode }) => (
+		<code className="bg-gray-800 text-green-400 px-2 py-1 rounded text-sm">
+			{children}
+		</code>
+	),
+	pre: ({ children }: { children: React.ReactNode }) => (
+		<div className="bg-gray-800 rounded-lg p-4 my-4 overflow-x-auto">
+			<pre className="text-green-400 text-sm">{children}</pre>
+		</div>
+	),
+	table: ({ children }: { children: React.ReactNode }) => (
+		<div className="overflow-x-auto my-6">
+			<table className="w-full border-collapse border border-gray-600 bg-gray-800/50 rounded-lg">
+				{children}
+			</table>
+		</div>
+	),
+	thead: ({ children }: { children: React.ReactNode }) => (
+		<thead className="bg-gray-700">{children}</thead>
+	),
+	tbody: ({ children }: { children: React.ReactNode }) => (
+		<tbody>{children}</tbody>
+	),
+	tr: ({ children }: { children: React.ReactNode }) => (
+		<tr className="border-b border-gray-600 hover:bg-gray-700/30">
+			{children}
+		</tr>
+	),
+	th: ({ children }: { children: React.ReactNode }) => (
+		<th className="border border-gray-600 px-4 py-3 text-left font-bold text-white bg-gray-700">
+			{children}
+		</th>
+	),
+	td: ({ children }: { children: React.ReactNode }) => (
+		<td className="border border-gray-600 px-4 py-3 text-gray-300">
+			{children}
+		</td>
+	),
+	img: ({ src, alt }: { src?: string; alt?: string }) => (
+		<img
+			src={src}
+			alt={alt}
+			className="w-full rounded-lg my-4 border border-gray-700"
+		/>
+	),
+	a: ({ href, children }: { href?: string; children: React.ReactNode }) => (
+		<a
+			href={href}
+			className="text-blue-400 hover:text-blue-300 underline"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			{children}
+		</a>
+	),
+};
+
 export function MDXContent({ content }: MDXContentProps) {
-	const parseContent = (content: string) => {
-		const lines = content.split("\n");
-		const elements: React.JSX.Element[] = [];
-		let inCodeBlock = false;
-		let codeBlockContent = "";
-		let codeBlockLang = "";
+	const [MdxComponent, setMdxComponent] = useState<React.ComponentType | null>(
+		null,
+	);
+	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
 
-		lines.forEach((line, index) => {
-			// コードブロックの処理
-			if (line.startsWith("```")) {
-				if (!inCodeBlock) {
-					inCodeBlock = true;
-					codeBlockLang = line.replace("```", "");
-					codeBlockContent = "";
-				} else {
-					inCodeBlock = false;
-					elements.push(
-						<div
-							key={index}
-							className="bg-gray-800 rounded-lg p-4 my-4 overflow-x-auto"
-						>
-							<pre className="text-green-400 text-sm">
-								<code>{codeBlockContent}</code>
-							</pre>
-						</div>,
-					);
-				}
-				return;
+	useEffect(() => {
+		const compileMDX = async () => {
+			try {
+				setIsLoading(true);
+				setError(null);
+
+				// MDXコンテンツをコンパイル
+				const compiled = await evaluate(content, {
+					...runtime,
+					useMDXComponents: () => mdxComponents,
+					remarkPlugins: [remarkGfm],
+				});
+
+				setMdxComponent(() => compiled.default);
+			} catch (err) {
+				console.error("MDX compilation error:", err);
+				setError("MDXのコンパイルに失敗しました");
+			} finally {
+				setIsLoading(false);
 			}
+		};
 
-			if (inCodeBlock) {
-				codeBlockContent += line + "\n";
-				return;
-			}
+		if (content) {
+			compileMDX();
+		}
+	}, [content]);
 
-			// 見出しの処理
-			if (line.startsWith("# ")) {
-				elements.push(
-					<h1
-						key={index}
-						className="text-3xl font-bold text-white mb-6 mt-8 first:mt-0"
-					>
-						{line.replace("# ", "")}
-					</h1>,
-				);
-			} else if (line.startsWith("## ")) {
-				elements.push(
-					<h2 key={index} className="text-2xl font-bold text-white mb-4 mt-6">
-						{line.replace("## ", "")}
-					</h2>,
-				);
-			} else if (line.startsWith("### ")) {
-				elements.push(
-					<h3 key={index} className="text-xl font-bold text-white mb-3 mt-4">
-						{line.replace("### ", "")}
-					</h3>,
-				);
-			} else if (line.startsWith("- ")) {
-				// リストアイテムの処理（黒点の重複を避ける）
-				const listContent = line.replace("- ", "");
-				const processedContent = processBoldText(listContent);
-				elements.push(
-					<li key={index} className="text-gray-300 mb-2 ml-4 list-disc">
-						{processedContent}
-					</li>,
-				);
-			} else if (line.trim() !== "") {
-				// 通常の段落の処理
-				const processedContent = processBoldText(line);
-				elements.push(
-					<p key={index} className="text-gray-300 mb-4 leading-relaxed">
-						{processedContent}
-					</p>,
-				);
-			}
-		});
+	if (isLoading) {
+		return (
+			<div className="flex items-center justify-center py-8">
+				<div className="text-gray-400">読み込み中...</div>
+			</div>
+		);
+	}
 
-		return elements;
-	};
+	if (error) {
+		return (
+			<div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4 my-4">
+				<p className="text-red-400">{error}</p>
+			</div>
+		);
+	}
 
-	// **bold** テキストを処理する関数
-	const processBoldText = (text: string) => {
-		const parts = text.split(/(\*\*.*?\*\*)/);
-		return parts.map((part, index) => {
-			if (part.startsWith("**") && part.endsWith("**")) {
-				const boldText = part.slice(2, -2);
-				return (
-					<strong key={index} className="font-bold text-white">
-						{boldText}
-					</strong>
-				);
-			}
-			return part;
-		});
-	};
+	if (!MdxComponent) {
+		return (
+			<div className="text-gray-400">コンテンツが見つかりません</div>
+		);
+	}
 
 	return (
 		<motion.div
@@ -111,7 +157,9 @@ export function MDXContent({ content }: MDXContentProps) {
 			transition={{ duration: 0.6 }}
 			className="prose prose-invert max-w-none"
 		>
-			{parseContent(content)}
+			<MDXProvider components={mdxComponents}>
+				<MdxComponent />
+			</MDXProvider>
 		</motion.div>
 	);
 }
