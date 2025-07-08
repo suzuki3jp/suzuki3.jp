@@ -4,6 +4,11 @@ import path from "path";
 
 const projectsDirectory = path.join(process.cwd(), "src", "projects");
 
+// デバッグ用ログ
+console.log("Current working directory:", process.cwd());
+console.log("Projects directory:", projectsDirectory);
+console.log("Projects directory exists:", fs.existsSync(projectsDirectory));
+
 export interface ProjectMetadata {
 	title: string;
 	description: string;
@@ -55,36 +60,55 @@ export async function getMDXContent(slug: string): Promise<ProjectWithContent> {
 
 export function getAllProjects(): ProjectWithContent[] {
 	try {
+		// デバッグ情報
+		console.log("Checking projects directory:", projectsDirectory);
+
 		if (!fs.existsSync(projectsDirectory)) {
+			console.log("Projects directory does not exist");
+			// Vercel環境での代替パスを試す
+			const alternativePath = path.join(process.cwd(), "projects");
+			console.log("Trying alternative path:", alternativePath);
+
+			if (fs.existsSync(alternativePath)) {
+				console.log("Alternative path exists, using it");
+				return getProjectsFromDirectory(alternativePath);
+			}
+
+			console.log("No projects directory found");
 			return [];
 		}
 
-		const filenames = fs.readdirSync(projectsDirectory);
-		const projects = filenames
-			.filter((name) => name.endsWith(".mdx"))
-			.map((filename) => {
-				const slug = filename.replace(/\.mdx$/, "");
-				const filePath = path.join(projectsDirectory, filename);
-				const fileContent = fs.readFileSync(filePath, "utf8");
-				const { data, content } = matter(fileContent);
-
-				return {
-					metadata: data as ProjectMetadata,
-					content,
-					slug,
-				};
-			});
-
-		// 開始日でソート（新しいものから）
-		return projects.sort(
-			(a, b) =>
-				new Date(b.metadata.startDate).getTime() -
-				new Date(a.metadata.startDate).getTime(),
-		);
+		return getProjectsFromDirectory(projectsDirectory);
 	} catch (error) {
 		console.error("Error reading project directory:", error);
 		return [];
 	}
+}
+
+// ヘルパー関数：指定されたディレクトリからプロジェクトを取得
+function getProjectsFromDirectory(directory: string): ProjectWithContent[] {
+	const filenames = fs.readdirSync(directory);
+	const projects = filenames
+		.filter((name) => name.endsWith(".mdx"))
+		.map((filename) => {
+			const slug = filename.replace(/\.mdx$/, "");
+			const filePath = path.join(directory, filename);
+			const fileContent = fs.readFileSync(filePath, "utf8");
+			const { data, content } = matter(fileContent);
+
+			return {
+				metadata: data as ProjectMetadata,
+				content,
+				slug,
+			};
+		});
+
+	// 開始日でソート（新しいものから）
+	return projects.sort(
+		(a, b) =>
+			new Date(b.metadata.startDate).getTime() -
+			new Date(a.metadata.startDate).getTime(),
+	);
 }
 
 // Featured プロジェクトを取得する関数
@@ -100,4 +124,37 @@ export function getFeaturedProjects(): ProjectWithContent[] {
 			new Date(b.metadata.startDate).getTime() -
 			new Date(a.metadata.startDate).getTime(),
 	);
+}
+
+// 静的に生成されたJSONファイルからプロジェクトを取得（フォールバック）
+async function getProjectsFromJson(): Promise<ProjectWithContent[]> {
+	try {
+		const response = await fetch("/projects.json");
+		if (!response.ok) {
+			throw new Error("Failed to fetch projects.json");
+		}
+		const projects = await response.json();
+		return projects;
+	} catch (error) {
+		console.error("Error loading projects from JSON:", error);
+		return [];
+	}
+}
+
+// Vercel対応：まずファイルシステムを試し、失敗したらJSONファイルから取得
+export async function getAllProjectsVercel(): Promise<ProjectWithContent[]> {
+	try {
+		// まず通常の方法を試す
+		const fsProjects = getAllProjects();
+		if (fsProjects.length > 0) {
+			return fsProjects;
+		}
+
+		// ファイルシステムからの取得に失敗した場合、JSONファイルから取得
+		console.log("Falling back to projects.json");
+		return await getProjectsFromJson();
+	} catch (error) {
+		console.error("Error in getAllProjectsVercel:", error);
+		return [];
+	}
 }

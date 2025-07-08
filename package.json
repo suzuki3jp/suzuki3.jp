@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "npm run generate-projects && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-projects": "node scripts/generate-projects.js"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
