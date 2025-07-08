@@ -31,6 +31,11 @@ export const APP_CONFIG = {
 		deleteSpeed: 75,
 		pauseDuration: 2000,
 	},
+	// リンク設定
+	links: {
+		github: "https://github.com/suzuki3jp",
+		twitter: "https://twitter.com/_suzuki3jp",
+	},
 } as const;
 
 // 共通のスタイルクラス

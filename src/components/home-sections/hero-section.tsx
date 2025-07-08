@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown, Github, Mail, Sparkles, Twitter } from "lucide-react";
+import Link from "next/link";
 import { BackgroundEffects } from "@/components/ui/background-effects";
 import { Button } from "@/components/ui/button";
 import { APP_CONFIG, COMMON_STYLES } from "@/constants/app-config";
@@ -79,25 +80,23 @@ export function HeroSection() {
 					<Button
 						size="lg"
 						className={`${COMMON_STYLES.gradients.button} text-white border-0`}
+						asChild
 					>
-						<Github className="w-5 h-5 mr-2" />
-						GitHub
+						<Link href={APP_CONFIG.links.github} target="_blank">
+							<Github className="w-5 h-5 mr-2" />
+							GitHub
+						</Link>
 					</Button>
 					<Button
 						size="lg"
 						variant="outline"
-						className="border-white/20 text-white hover:bg-white/10 bg-transparent"
+						className="hover:text-white border-white/20 text-white hover:bg-white/10 bg-transparent"
+						asChild
 					>
-						<Twitter className="w-5 h-5 mr-2" />
-						Twitter
-					</Button>
-					<Button
-						size="lg"
-						variant="outline"
-						className="border-white/20 text-white hover:bg-white/10 bg-transparent"
-					>
-						<Mail className="w-5 h-5 mr-2" />
-						Contact
+						<Link href={APP_CONFIG.links.twitter} target="_blank">
+							<Twitter className="w-5 h-5 mr-2" />
+							Twitter
+						</Link>
 					</Button>
 				</motion.div>
 			</div>
