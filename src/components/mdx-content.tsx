@@ -62,19 +62,19 @@ export function MDXContent({ content }: MDXContentProps) {
 			<h3 className="text-xl font-bold text-white mb-3 mt-4">{children}</h3>
 		),
 		h4: ({ children }: { children: React.ReactNode }) => (
-			<h4 className="text-lg font-bold text-white mb-3 mt-4">{children}</h4>
+			<h4 className="text-base font-bold text-white mb-2 mt-3">{children}</h4>
 		),
 		h5: ({ children }: { children: React.ReactNode }) => (
-			<h5 className="text-base font-bold text-white mb-2 mt-3">{children}</h5>
+			<h5 className="text-sm font-bold text-white mb-2 mt-3">{children}</h5>
 		),
 		h6: ({ children }: { children: React.ReactNode }) => (
-			<h6 className="text-sm font-bold text-white mb-2 mt-3">{children}</h6>
+			<h6 className="text-xs font-bold text-white mb-2 mt-3">{children}</h6>
 		),
 		p: ({ children }: { children: React.ReactNode }) => (
-			<p className="text-gray-300 mb-4 leading-relaxed">{children}</p>
+			<p className="text-gray-300 mb-8 leading-relaxed">{children}</p>
 		),
 		ul: ({ children }: { children: React.ReactNode }) => (
-			<ul className="text-gray-300 mb-4 ml-4 list-disc space-y-2">{children}</ul>
+			<ul className="text-gray-300 mb-8 ml-4 list-disc space-y-2">{children}</ul>
 		),
 		ol: ({ children }: { children: React.ReactNode }) => (
 			<ol className="text-gray-300 mb-4 ml-4 list-decimal space-y-2">{children}</ol>
