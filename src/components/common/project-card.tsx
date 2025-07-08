@@ -93,11 +93,11 @@ export function ProjectCard({
 					)}
 
 					{/* Tech Stack */}
-					<div className="flex flex-wrap gap-2 mb-4 min-h-[2rem]">
+					<div className="flex flex-wrap gap-2 mb-4 h-16 content-start overflow-hidden">
 						{project.metadata.tech.map((tech) => (
 							<span
 								key={tech}
-								className="px-2 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs font-medium"
+								className="px-2 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs font-medium h-fit"
 							>
 								{tech}
 							</span>
