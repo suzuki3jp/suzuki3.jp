@@ -1,31 +1,28 @@
-import { ThemeProvider } from "@/components/theme-provider";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import type React from "react";
 import "./globals.css";
 
+import { Navigation } from "@/components/navigation";
+
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-    title: "鈴木（suzuki3jp） のプロフィール",
+export const metadata: Metadata = {
+	title: "suzuki3jp's Portfolio",
+	description: "Student Developer & Otaku",
 };
 
 export default function RootLayout({
-    children,
+	children,
 }: {
-    children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-    return (
-        <html lang="ja" suppressHydrationWarning>
-            <body className={inter.className}>
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="light"
-                    enableSystem
-                    disableTransitionOnChange
-                >
-                    {children}
-                </ThemeProvider>
-            </body>
-        </html>
-    );
+	return (
+		<html lang="ja">
+			<body className={inter.className}>
+				<Navigation />
+				<main className="pt-16">{children}</main>
+			</body>
+		</html>
+	);
 }
