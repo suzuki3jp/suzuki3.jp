@@ -14,6 +14,10 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, index }: ProjectCardProps) {
+	if (!project.metadata.images || project.metadata.images.length === 0) {
+		project.metadata.images = ["/placeholder.svg"];
+	}
+
 	return (
 		<motion.div
 			key={project.slug}
