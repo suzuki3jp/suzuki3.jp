@@ -4,9 +4,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { ProjectMetadata } from "@/lib/mdx";
 
 interface ProjectImageSliderProps {
-	images: string[];
+	images: ProjectMetadata["images"];
 	title: string;
 	className?: string;
 }
@@ -17,6 +18,10 @@ export function ProjectImageSlider({
 	className = "",
 }: ProjectImageSliderProps) {
 	const [currentIndex, setCurrentIndex] = useState(0);
+
+	if (!images) {
+		images = ["/placeholder.svg"];
+	}
 
 	const nextImage = () => {
 		setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -29,16 +34,6 @@ export function ProjectImageSlider({
 	const goToImage = (index: number) => {
 		setCurrentIndex(index);
 	};
-
-	if (images.length === 0) {
-		return (
-			<div
-				className={`bg-gray-800 rounded-xl flex items-center justify-center h-64 md:h-96 ${className}`}
-			>
-				<span className="text-gray-400">画像がありません</span>
-			</div>
-		);
-	}
 
 	if (images.length === 1) {
 		return (

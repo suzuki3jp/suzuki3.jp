@@ -8,7 +8,7 @@ export interface ProjectMetadata {
 	title: string;
 	description: string;
 	tech: string[];
-	images: string[];
+	images?: string[];
 	status: string;
 	startDate: string;
 	endDate?: string;
