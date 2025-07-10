@@ -2,7 +2,7 @@ import { evaluate } from "@mdx-js/mdx";
 import { MDXProvider } from "@mdx-js/react";
 import { motion } from "framer-motion";
 import type React from "react";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as runtime from "react/jsx-runtime";
 import remarkGfm from "remark-gfm";
 
@@ -17,7 +17,9 @@ interface TocItem {
 }
 
 export function MDXContent({ content }: MDXContentProps) {
-	const [MdxComponent, setMdxComponent] = useState<React.ComponentType | null>(null);
+	const [MdxComponent, setMdxComponent] = useState<React.ComponentType | null>(
+		null,
+	);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [tocItems, setTocItems] = useState<TocItem[]>([]);
@@ -25,23 +27,27 @@ export function MDXContent({ content }: MDXContentProps) {
 
 	// 見出しからTOCアイテムを生成
 	const generateTocFromHeadings = (element: HTMLElement): TocItem[] => {
-		const headings = element.querySelectorAll('h1, h2, h3, h4, h5, h6');
+		const headings = element.querySelectorAll("h1, h2, h3, h4, h5, h6");
 		const tocItems: TocItem[] = [];
 
 		headings.forEach((heading, index) => {
 			const level = parseInt(heading.tagName.charAt(1));
-			const text = heading.textContent || '';
-			
+			const text = heading.textContent || "";
+
 			// IDがない場合は生成
 			if (!heading.id) {
-				const id = `heading-${index}-${text.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')}`;
+				const id = `heading-${index}-${text
+					.toLowerCase()
+					.replace(/[^a-z0-9]/g, "-")
+					.replace(/-+/g, "-")
+					.replace(/^-|-$/g, "")}`;
 				heading.id = id;
 			}
 
 			tocItems.push({
 				id: heading.id,
 				text,
-				level
+				level,
 			});
 		});
 
@@ -51,18 +57,18 @@ export function MDXContent({ content }: MDXContentProps) {
 	// MDXコンポーネントのカスタムスタイリング
 	const mdxComponents = {
 		h1: ({ children }: { children: React.ReactNode }) => (
-			<h1 className="text-3xl font-bold text-white mb-6 mt-8 first:mt-0">
+			<h1 className="text-3xl font-bold text-white mb-6 mt-12 first:mt-0">
 				{children}
 			</h1>
 		),
 		h2: ({ children }: { children: React.ReactNode }) => (
-			<h2 className="text-2xl font-bold text-white mb-4 mt-6">{children}</h2>
+			<h2 className="text-2xl font-bold text-white mb-4 mt-8">{children}</h2>
 		),
 		h3: ({ children }: { children: React.ReactNode }) => (
-			<h3 className="text-xl font-bold text-white mb-3 mt-4">{children}</h3>
+			<h3 className="text-xl font-bold text-white mb-3 mt-6">{children}</h3>
 		),
 		h4: ({ children }: { children: React.ReactNode }) => (
-			<h4 className="text-base font-bold text-white mb-2 mt-3">{children}</h4>
+			<h4 className="text-base font-bold text-white mb-2 mt-4">{children}</h4>
 		),
 		h5: ({ children }: { children: React.ReactNode }) => (
 			<h5 className="text-sm font-bold text-white mb-2 mt-3">{children}</h5>
@@ -74,10 +80,14 @@ export function MDXContent({ content }: MDXContentProps) {
 			<p className="text-gray-300 mb-8 leading-relaxed">{children}</p>
 		),
 		ul: ({ children }: { children: React.ReactNode }) => (
-			<ul className="text-gray-300 mb-8 ml-4 list-disc space-y-2">{children}</ul>
+			<ul className="text-gray-300 mb-8 ml-4 list-disc space-y-2">
+				{children}
+			</ul>
 		),
 		ol: ({ children }: { children: React.ReactNode }) => (
-			<ol className="text-gray-300 mb-4 ml-4 list-decimal space-y-2">{children}</ol>
+			<ol className="text-gray-300 mb-4 ml-4 list-decimal space-y-2">
+				{children}
+			</ol>
 		),
 		li: ({ children }: { children: React.ReactNode }) => (
 			<li className="text-gray-300">{children}</li>
@@ -148,9 +158,7 @@ export function MDXContent({ content }: MDXContentProps) {
 				{children}
 			</a>
 		),
-		hr: () => (
-			<hr className="border-gray-600 my-8" />
-		),
+		hr: () => <hr className="border-gray-600 my-8" />,
 	};
 
 	// TOCコンポーネント
@@ -160,7 +168,7 @@ export function MDXContent({ content }: MDXContentProps) {
 		const handleTocClick = (id: string) => {
 			const element = document.getElementById(id);
 			if (element) {
-				element.scrollIntoView({ behavior: 'smooth' });
+				element.scrollIntoView({ behavior: "smooth" });
 			}
 		};
 
@@ -194,10 +202,13 @@ export function MDXContent({ content }: MDXContentProps) {
 								<button
 									onClick={() => handleTocClick(item.id)}
 									className={`text-left w-full hover:text-blue-400 cursor-pointer transition-colors ${
-										item.level === 1 ? 'font-semibold text-white' :
-										item.level === 2 ? 'ml-4 text-gray-300' :
-										item.level === 3 ? 'ml-8 text-gray-400' :
-										'ml-12 text-gray-500'
+										item.level === 1
+											? "font-semibold text-white"
+											: item.level === 2
+												? "ml-4 text-gray-300"
+												: item.level === 3
+													? "ml-8 text-gray-400"
+													: "ml-12 text-gray-500"
 									}`}
 								>
 									{item.text}
@@ -303,7 +314,7 @@ export function MDXContent({ content }: MDXContentProps) {
 		>
 			{/* 目次を表示 */}
 			<TableOfContents items={tocItems} />
-			
+
 			{/* MDXコンテンツ */}
 			<div ref={contentRef}>
 				<MDXProvider components={mdxComponents}>

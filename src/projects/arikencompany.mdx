@@ -1,0 +1,53 @@
+---
+title: "ArikenCompany"
+description: "Twitch と Discord のチャットボット、および動画編集の業務効率化アプリケーション"
+tech:
+  - Node.js
+  - TypeScript
+  - Twurple
+  - discord.js
+  - express
+  - React
+  - Material UI
+  - Prisma
+status: "完成"
+startDate: "2022-07-11"
+endDate: "2025-07-11"
+team: "個人開発"
+featured: false
+githubUrl: "https://github.com/suzuki3jp/arikencompany"
+---
+
+# ArikenCompany
+
+## プロジェクト概要
+ArikenCompany は Twitch と Discord のチャットボット、および動画編集の業務効率化アプリケーションです。Twitch ではチャットコマンドを提供し、Discord では GUI からのコマンドの管理を行います。また、動画編集の業務効率化に関する機能も含まれています。
+
+## 技術スタック
+
+- **フロントエンド**: React, Material UI
+- **バックエンド**: Node.js, TypeScript, Express
+- **データベース**: SQLite, Prisma
+- **デプロイ**: Vercel, VPS, GitHub Actions
+
+## 主な機能
+
+- **Twitch チャットコマンド**: Twitch チャットで使用できるモデレータが管理を行うコマンドを提供
+- **Discord GUI**: Twitch のチャットコマンドを管理するための GUI を提供
+- **コマンド内コード**: コマンド内でオリジナルのコードを実行でき、それにより fetch などを行える。自前でパーサを実装
+- **動画編集の業務効率化**: 動画編集に関する業務を効率化するための機能を提供。Discord と統合
+
+## 開発のきっかけ
+Twitch ではチャットボットを使用して、視聴者とのインタラクションを増やすことが一般的です。しかし、既存のチャットボットは基本的に Twitch チャット上でコマンドを管理するため、非エンジニアのモデレータがコマンドを管理するのは難しいと感じていました。
+
+そこで、Discord 上で GUI を提供することで、モデレータが簡単にコマンドを管理できるようにしました。また、当時行っていた動画編集の業務を効率化するための機能も追加しました。
+
+## 技術的な挑戦・学び
+このアプリケーションはプログラミングを勉強し始めてすぐに開発を始めたため、勉強しつつ開発を進めるような形でした。
+
+最初のバージョンでは、JavaScript で開発を行い、後に TypeScript に移行しました。TypeScript の導入により、型安全な開発が可能になり、コードの品質が向上しました。
+
+また、API にもこのアプリケーションで初めて触れました。これにより、HTTP リクエストやレスポンスについて、理解を深めることができました。
+
+## 今後の予定
+- **メンテナンス**: 現在はメンテナンスモードで、機能追加は行っていませんが、必要に応じてアップデートを行う予定です。
