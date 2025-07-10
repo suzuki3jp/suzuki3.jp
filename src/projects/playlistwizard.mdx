@@ -110,7 +110,8 @@ GitHub を使用して、プロジェクトのソースコードを管理して�
 #### Server Actions について
 Server Actions を活用することで、Node.js でしか動作しないライブラリを使用しつつ、型安全に開発を進めることができました。
 
-Server Actions を活用する中で、当初 プレイリストのコピー、マージ、などの粒度で Server Actions を定義していましたが、操作の進度を UI に反映するために、イベントハンドラのような関数を Server Actions の引数として渡したかったのですが、Server Actions の引数はプリミティブ型やオブジェクトに限られるため、実現できませんでした。
+Server Actions を活用する中で、当初 プレイリストのコピー、マージ、などの粒度で Server Actions を定義していました。
+しかし、操作の進度を UI に反映するために、イベントハンドラのような関数を Server Actions の引数として渡したかったのですが、Server Actions の引数はプリミティブ型やオブジェクトに限られるため、実現できませんでした。
 
 そのため、API リクエスト単体の Server Actions を定義し、コピーなどのロジックは Server Actions 外で実装することで、進度に応じた UI の更新を実現しました。
 
