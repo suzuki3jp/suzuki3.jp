@@ -3,13 +3,15 @@
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
-
+import {
+	EmptyState,
+	LoadingState,
+} from "@/components/common/loading-and-empty-states";
 import { ProjectCard } from "@/components/common/project-card";
-import { LoadingState, EmptyState } from "@/components/common/loading-and-empty-states";
+import { Container, Section, SectionHeader } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
-import { Section, SectionHeader, Container } from "@/components/layout/section";
-import { useProjectsPreview } from "@/hooks/use-projects";
 import { COMMON_STYLES } from "@/constants/app-config";
+import { useProjectsPreview } from "@/hooks/use-projects";
 import { fadeInUp, getTransition } from "@/lib/animations";
 
 export function ProjectsPreviewSection() {
@@ -21,16 +23,11 @@ export function ProjectsPreviewSection() {
 				<SectionHeader title="Featured Projects" />
 
 				{isLoading && <LoadingState message="プロジェクトを読み込み中..." />}
-				
-				{error && (
-					<EmptyState 
-						title="エラーが発生しました"
-						message={error}
-					/>
-				)}
+
+				{error && <EmptyState title="エラーが発生しました" message={error} />}
 
 				{!isLoading && !error && projects.length === 0 && (
-					<EmptyState 
+					<EmptyState
 						title="プロジェクトが見つかりません"
 						message="現在表示できるプロジェクトはありません。"
 					/>
@@ -39,14 +36,16 @@ export function ProjectsPreviewSection() {
 				{!isLoading && !error && projects.length > 0 && (
 					<>
 						<div className={`${COMMON_STYLES.layout.grid} mb-12`}>
-							{projects.map((project, index) => (
-								<ProjectCard
-									key={project.slug}
-									project={project}
-									index={index}
-									variant="preview"
-								/>
-							))}
+							{projects
+								.filter((p) => p.metadata.featured)
+								.map((project, index) => (
+									<ProjectCard
+										key={project.slug}
+										project={project}
+										index={index}
+										variant="preview"
+									/>
+								))}
 						</div>
 
 						<motion.div
