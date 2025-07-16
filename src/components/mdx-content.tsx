@@ -57,24 +57,34 @@ export function MDXContent({ content }: MDXContentProps) {
 	// MDXコンポーネントのカスタムスタイリング
 	const mdxComponents = {
 		h1: ({ children }: { children: React.ReactNode }) => (
-			<h1 className="text-3xl font-bold text-white mb-6 mt-12 first:mt-0">
+			<h1 className="text-3xl font-bold text-white mb-6 mt-12 first:mt-0 border-b-2 border-gray-700 pb-2">
 				{children}
 			</h1>
 		),
 		h2: ({ children }: { children: React.ReactNode }) => (
-			<h2 className="text-2xl font-bold text-white mb-4 mt-8">{children}</h2>
+			<h2 className="text-2xl font-bold text-white mb-4 mt-8 border-b-2 border-gray-700 pb-2">
+				{children}
+			</h2>
 		),
 		h3: ({ children }: { children: React.ReactNode }) => (
-			<h3 className="text-xl font-bold text-white mb-3 mt-6">{children}</h3>
+			<h3 className="text-xl font-bold text-white mb-3 mt-6 border-b-2 border-gray-700 pb-1">
+				{children}
+			</h3>
 		),
 		h4: ({ children }: { children: React.ReactNode }) => (
-			<h4 className="text-base font-bold text-white mb-2 mt-4">{children}</h4>
+			<h4 className="text-base font-bold text-white mb-2 mt-4 border-b-2 border-gray-700 pb-1">
+				{children}
+			</h4>
 		),
 		h5: ({ children }: { children: React.ReactNode }) => (
-			<h5 className="text-sm font-bold text-white mb-2 mt-3">{children}</h5>
+			<h5 className="text-sm font-bold text-white mb-2 mt-3 border-b-2 border-gray-700 pb-1">
+				{children}
+			</h5>
 		),
 		h6: ({ children }: { children: React.ReactNode }) => (
-			<h6 className="text-xs font-bold text-white mb-2 mt-3">{children}</h6>
+			<h6 className="text-xs font-bold text-white mb-2 mt-3 border-b-2 border-gray-700 pb-1">
+				{children}
+			</h6>
 		),
 		p: ({ children }: { children: React.ReactNode }) => (
 			<p className="text-gray-300 mb-8 leading-relaxed">{children}</p>
