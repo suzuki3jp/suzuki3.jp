@@ -12,6 +12,7 @@ export interface ProjectMetadata {
 	status: string;
 	startDate: string;
 	endDate?: string;
+	lastUpdated: string;
 	team: string;
 	featured?: boolean;
 	githubUrl?: string;
@@ -110,6 +111,7 @@ export function getMDXContent(slug: string): ProjectWithContent {
 				images: ["/placeholder.svg?height=400&width=800"],
 				status: "不明",
 				startDate: "2024-01-01",
+				lastUpdated: "2024-01-01",
 				team: "不明",
 			},
 			content: `# ${slug}\n\nContent not found.`,
@@ -125,6 +127,7 @@ export function getMDXContent(slug: string): ProjectWithContent {
 				images: ["/placeholder.svg?height=400&width=800"],
 				status: "不明",
 				startDate: "2024-01-01",
+				lastUpdated: "2024-01-01",
 				team: "不明",
 			},
 			content: `# ${slug}\n\nContent not found.`,

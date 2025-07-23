@@ -46,15 +46,15 @@ export default function ProjectDetailPage({ params }: ProjectDetailProps) {
 			setShowScrollTop(window.scrollY > 300);
 		};
 
-		window.addEventListener('scroll', handleScroll);
-		return () => window.removeEventListener('scroll', handleScroll);
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
 
 	// スクロールトップ関数
 	const scrollToTop = () => {
 		window.scrollTo({
 			top: 0,
-			behavior: 'smooth'
+			behavior: "smooth",
 		});
 	};
 
@@ -132,6 +132,18 @@ export default function ProjectDetailPage({ params }: ProjectDetailProps) {
 							>
 								{project.metadata.status}
 							</Badge>
+
+							<span className="text-gray-400">
+								最終更新:{" "}
+								{new Date(project.metadata.lastUpdated).toLocaleDateString(
+									"ja-JP",
+									{
+										year: "numeric",
+										month: "2-digit",
+										day: "2-digit",
+									},
+								)}
+							</span>
 						</div>
 					</div>
 
