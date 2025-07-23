@@ -63,7 +63,7 @@ export default function TimelinePage() {
 			title: "GitHub Stats 開発開始",
 			description:
 				"GitHub Stats プロジェクトを開始。GitHub の統計情報を可視化するアプリケーション。",
-			externalLink: "/projects/githubstats",
+			externalLink: "/projects/github-stats",
 		},
 	];
 	const timelineEvents: TimelineEventWithIcon[] = timelineData
