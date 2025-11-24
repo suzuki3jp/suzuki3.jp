@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { GITHUB_URL, X_URL, ZENN_URL } from "@/constants";
 import { CenteredLayout } from "@/features/layout/components/centerd-layout";
 
 export function Hero() {
@@ -15,9 +16,9 @@ export function Hero() {
       <div className="space-y-14">
         <p className="text-[20px]">Developer, Otaku, Student, Video Editor</p>
         <div className="space-x-3 text-[20px] underline decoration-[0.025em] decoration-current underline-offset-[0.25em]">
-          <SocialLink label="X" href="https://x.com/_suzuki3jp" />
-          <SocialLink label="GitHub" href="https://github.com/suzuki3jp" />
-          <SocialLink label="Zenn" href="https://zenn.dev/suzuki3jp" />
+          <SocialLink label="X" href={X_URL} />
+          <SocialLink label="GitHub" href={GITHUB_URL} />
+          <SocialLink label="Zenn" href={ZENN_URL} />
         </div>
       </div>
     </CenteredLayout>
