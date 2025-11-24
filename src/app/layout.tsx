@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
+import { Footer } from "@/features/footer";
 import { Header } from "@/features/header";
 
 const ibm = IBM_Plex_Mono({
@@ -32,6 +33,7 @@ export default function ({
       >
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

@@ -3,7 +3,10 @@ import { CenteredLayout } from "@/features/layout/components/centerd-layout";
 
 export function Hero() {
   return (
-    <CenteredLayout className="-translate-y-16 my-auto space-y-7">
+    <CenteredLayout
+      className="-translate-y-16 my-auto space-y-7"
+      parentClassName="h-full"
+    >
       <h1 className="font-bold text-[64px]">
         Hey there,
         <br />
