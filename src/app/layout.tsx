@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
+import { Header } from "@/features/header";
 
 const ibm = IBM_Plex_Mono({
   subsets: ["latin"],
@@ -26,7 +27,10 @@ export default function ({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased ${ibm.variable} ${noto.variable}`}>
+      <body
+        className={`antialiased ${ibm.variable} ${noto.variable} min-h-screen`}
+      >
+        <Header />
         {children}
       </body>
     </html>
