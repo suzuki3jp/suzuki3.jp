@@ -1,11 +1,3 @@
-import { ArticlesSection } from "@/features/articles/components";
-import { Hero } from "@/features/hero";
-
-export default function () {
-  return (
-    <>
-      <Hero />
-      <ArticlesSection />
-    </>
-  );
+export default function PortfolioPage() {
+  return <h1>Home</h1>;
 }

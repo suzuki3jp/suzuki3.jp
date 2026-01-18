@@ -1,39 +1,36 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Noto_Sans_JP } from "next/font/google";
+import { JetBrains_Mono, Noto_Sans_JP } from "next/font/google";
+import type React from "react";
 import "./globals.css";
-import { Footer } from "@/features/footer";
-import { Header } from "@/features/header";
 
-const ibm = IBM_Plex_Mono({
+const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-ibm-mono",
+  weight: ["300", "400", "500", "700"],
+  variable: "--font-sans",
 });
 
-const noto = Noto_Sans_JP({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-noto",
+  variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
-  title: "suzuki3jp's portsfolio",
-  description: "suzuki3jp's portsfolio",
+  title: "suzuki3jp",
+  description:
+    "Software Engineer specializing in modern web development with React, Next.js, and TypeScript.",
 };
 
-export default function ({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <body
-        className={`antialiased ${ibm.variable} ${noto.variable} min-h-screen`}
+        className={`${notoSansJP.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
-        <Header />
         {children}
-        <Footer />
       </body>
     </html>
   );
