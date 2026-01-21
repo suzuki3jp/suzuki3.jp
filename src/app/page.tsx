@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { AboutSection } from "@/features/about/components";
 import { ExperienceSection } from "@/features/experience/components";
+import { ProjectsSection } from "@/features/projects/components";
 
 export default function PortfolioPage() {
   return (
@@ -40,6 +41,7 @@ export default function PortfolioPage() {
         </header>
         <AboutSection />
         <ExperienceSection />
+        <ProjectsSection />
       </div>
     </main>
   );

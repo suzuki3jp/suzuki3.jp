@@ -1,4 +1,24 @@
 /**
+ * 日付文字列をパースする
+ */
+export function parseDate(dateStr: string): Date {
+  const date = new Date(dateStr);
+  if (Number.isNaN(date.getTime())) {
+    throw new Error(`Invalid date string: ${dateStr}`);
+  }
+  return date;
+}
+
+/**
+ * 日付を "YYYY.MM" 形式にフォーマットする
+ */
+export function formatYearMonth(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  return `${year}.${month}`;
+}
+
+/**
  * 期間を計算する（月数）
  * - end が undefined: 現在までの期間
  */
@@ -15,7 +35,7 @@ export function calcDuration(start: string, end?: string): number {
 }
 
 /**
- * 期間を表示用文字列にフォーマットする
+ * 期間を表示用文字列にフォーマットする（例: "1年3ヶ月"）
  */
 export function formatDuration(months: number): string {
   const years = Math.floor(months / 12);
@@ -50,18 +70,4 @@ export function formatPeriod(start: string, end?: string): string {
   }
 
   return `${startStr} - ${endStr}`;
-}
-
-function parseDate(dateStr: string): Date {
-  const date = new Date(dateStr);
-  if (Number.isNaN(date.getTime())) {
-    throw new Error(`Invalid date string: ${dateStr}`);
-  }
-  return date;
-}
-
-function formatYearMonth(date: Date): string {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  return `${year}.${month}`;
 }

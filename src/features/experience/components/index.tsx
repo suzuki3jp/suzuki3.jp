@@ -1,6 +1,10 @@
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
-import { calcDuration, formatDuration, formatPeriod } from "../calc-duration";
+import {
+  calcDuration,
+  formatDuration,
+  formatPeriod,
+} from "@/features/shared/date-utils";
 import type { Experience } from "../entities/experience";
 
 const EXPERIENCES: Experience[] = [

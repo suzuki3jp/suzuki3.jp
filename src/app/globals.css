@@ -136,24 +136,27 @@
 }
 
 .prose h1 {
-  @apply text-3xl font-medium mb-4 mt-8 first:mt-0;
+  @apply text-3xl font-medium mb-4 mt-8 pb-2 border-b-2 border-border first:mt-0;
 }
 
 .prose h2 {
-  @apply text-2xl font-medium mb-3 mt-6;
+  @apply text-2xl font-medium mb-3 mt-6 pb-2 border-b-2 border-border;
 }
 
 .prose h3 {
-  @apply text-xl font-medium mb-2 mt-4;
+  @apply text-xl font-medium mb-2 mt-4 pb-1 border-b-2 border-border;
 }
 
 .prose p {
   @apply mb-4;
 }
 
-.prose ul,
+.prose ul {
+  @apply mb-4 pl-6 list-disc;
+}
+
 .prose ol {
-  @apply mb-4 pl-6;
+  @apply mb-4 pl-6 list-decimal;
 }
 
 .prose li {

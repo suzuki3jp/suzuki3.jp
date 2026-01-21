@@ -64,6 +64,7 @@ shadcn/ui コンポーネント追加: `npx shadcn@latest add <component>`
 - **インポート**: Biome が自動整理
 - **クォート**: ダブルクォート
 - **インデント**: スペース2つ
+- **リンク**: `<a>` タグではなく `next/link` の `<Link>` を使用する
 
 ## スタイリング
 
