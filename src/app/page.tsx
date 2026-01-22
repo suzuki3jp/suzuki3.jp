@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { AboutSection } from "@/features/about/components";
+import { BlogSection } from "@/features/blog/components";
 import { ExperienceSection } from "@/features/experience/components";
 import { ProjectsSection } from "@/features/projects/components";
 
@@ -42,6 +43,7 @@ export default function PortfolioPage() {
         <AboutSection />
         <ExperienceSection />
         <ProjectsSection />
+        <BlogSection />
       </div>
     </main>
   );
