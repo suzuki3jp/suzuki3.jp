@@ -1,5 +1,7 @@
+import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { formatPeriod } from "@/features/shared/date-utils";
 import { getProjects } from "../get-projects";
 import { ImageSlideshow } from "./image-slideshow";
@@ -13,9 +15,22 @@ export function ProjectsSection() {
 
   return (
     <section className="mb-16">
-      <h2 className="mb-6 font-medium text-muted-foreground text-sm uppercase tracking-wider">
-        Projects
-      </h2>
+      <div className="mb-6 flex items-baseline justify-between">
+        <h2 className="font-medium text-muted-foreground text-sm uppercase tracking-wider">
+          Projects
+        </h2>
+        <Button variant="ghost" size="sm" asChild className="-mr-3">
+          <Link
+            href="https://github.com/suzuki3jp?tab=repositories"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs"
+          >
+            View More
+            <ExternalLink className="ml-1 size-3" />
+          </Link>
+        </Button>
+      </div>
       <div className="grid gap-6 md:grid-cols-2">
         {projects.map((project) => (
           <div
