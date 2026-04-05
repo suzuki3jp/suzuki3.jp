@@ -50,7 +50,7 @@ export default async function ProjectPage({ params }: Props) {
 
           <header className="mb-8">
             <div className="mb-4 flex items-start justify-between">
-              <h1 className="font-medium text-3xl tracking-tight">
+              <h1 className="font-bold text-3xl tracking-tight">
                 {project.title}
               </h1>
               <div className="flex space-x-4">
