@@ -2,6 +2,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import { mdxComponents } from "@/components/mdx-components";
 import { Badge } from "@/components/ui/badge";
 import { getPostBySlug, getPostSlugs } from "@/features/blog/get-articles";
 import { formatDate } from "@/features/shared/date-utils";
@@ -56,7 +57,7 @@ export default async function BlogPostPage({ params }: Props) {
         </header>
 
         <div className="prose prose-neutral max-w-none dark:prose-invert">
-          <MDXRemote source={post.content} />
+          <MDXRemote source={post.content} components={mdxComponents} />
         </div>
       </article>
     </main>
