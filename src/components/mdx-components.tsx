@@ -11,8 +11,7 @@ function MdxImage(props: ComponentProps<"img">) {
     return (
       <video
         className="my-6 aspect-video w-full rounded-lg border border-border bg-muted"
-        autoPlay
-        muted
+        controls
         playsInline
         preload="metadata"
         src={src}
