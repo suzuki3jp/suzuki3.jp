@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { mdxComponents } from "@/components/mdx-components";
 import { ImageSlideshow } from "@/features/projects/components/image-slideshow";
 import {
   getProjectBySlug,
@@ -84,7 +85,7 @@ export default async function ProjectPage({ params }: Props) {
           </header>
 
           <div className="prose prose-neutral dark:prose-invert max-w-none">
-            <MDXRemote source={project.content} />
+            <MDXRemote source={project.content} components={mdxComponents} />
           </div>
         </article>
       </div>
